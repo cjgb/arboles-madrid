@@ -13,7 +13,7 @@ const InfoModal = ({ isOpen, onClose, isWelcome = false }) => {
             <svg className="w-8 h-8 fill-current text-emerald-100" viewBox="0 0 24 24">
               <path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z" />
             </svg>
-            <h1 className="text-2xl font-bold tracking-tight leading-none">Ab Arbore ad Arborem Matriti</h1>
+            <h1 className="text-2xl font-bold tracking-tight leading-none">Madrid, de árbol en árbol</h1>
           </div>
           <button
             onClick={onClose}
@@ -30,9 +30,9 @@ const InfoModal = ({ isOpen, onClose, isWelcome = false }) => {
         <div className="p-8 overflow-y-auto space-y-8">
           {isWelcome && (
             <section className="text-center pb-6 border-b border-emerald-50">
-              <h2 className="text-xl font-semibold text-emerald-800 mb-2">¡Bienvenido a Madrid de Árbol en Árbol!</h2>
+              <h2 className="text-xl font-semibold text-emerald-800 mb-2">¡Bienvenido a «Madrid de Árbol en Árbol»!</h2>
               <p className="text-gray-600 leading-relaxed">
-                Esta aplicación te permite planificar rutas óptimas en Madrid (particularmente, si eres una ardilla que prefiere navegar la ciudad saltando de árbol en árbol).
+                Recorre Madrid de una manera diferente: saltando de árbol en árbol (o, si no eres una ardilla, a la sombra de nuestros amigos los árboles).
               </p>
             </section>
           )}
@@ -70,13 +70,16 @@ const InfoModal = ({ isOpen, onClose, isWelcome = false }) => {
               </h3>
               <p className="text-gray-600 leading-relaxed text-sm">
                 Se dice que en época de los romanos, una ardilla podía atravesar Hispania saltando de árbol en árbol.
-                ¿Podría esa ardilla atravesar el Madrid de hoy de la misma manera? Aquí podrás encontrar rutas óptimas que maximizan la distancia recorrida saltando de copa en copa.
+                ¿Podría esa ardilla cruzar el Madrid de hoy de la misma manera? Usando datos abiertos del Ayuntamiento de Madrid, esta aplicación te permitirá navegar la villa de una manera diferente.
               </p>
             </section>
           </div>
 
           <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-4">
-            <span className="text-center sm:text-left">© 2026 Ab Arbore ad Arborem Matriti. Datos de OSM y del Ayuntamiento de Madrid.</span>
+            <div className="flex flex-col text-center sm:text-left">
+              <span>© 2026 Madrid, de árbol en árbol. Datos de OSM y del Ayuntamiento de Madrid.</span>
+              <span className="mt-1 text-emerald-600/60 font-medium">Este proyecto no utiliza <i>cookies</i> ni realiza ningún tipo de rastreo de usuarios.</span>
+            </div>
             <button
               onClick={onClose}
               className="px-8 py-2.5 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-lg active:scale-95 transform"

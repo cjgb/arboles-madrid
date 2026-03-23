@@ -18,14 +18,18 @@ function App() {
   const [isFirstVisit, setIsFirstVisit] = useState(false);
 
   useEffect(() => {
-    // Check if user has visited before
-    const hasVisited = localStorage.getItem('hasVisitedMadridRouting');
-    if (!hasVisited) {
-      setIsFirstVisit(true);
-      setIsInfoModalOpen(true);
-      localStorage.setItem('hasVisitedMadridRouting', 'true');
-    }
+    // Open the info modal on every start
+    setIsFirstVisit(true);
+    setIsInfoModalOpen(true);
   }, []);
+
+  const handleReset = () => {
+    setRoute(null);
+    setTreePoints(null);
+    setSummary(null);
+    setError(null);
+    setLoading(false);
+  };
 
   const handlePointsSelected = async (start, end) => {
     setLoading(true);
@@ -96,6 +100,7 @@ function App() {
       {/* Map View layer */}
       <MapView 
         onPointsSelected={handlePointsSelected} 
+        onReset={handleReset}
         route={route} 
         treePoints={treePoints}
       />

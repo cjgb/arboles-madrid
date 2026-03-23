@@ -54,7 +54,7 @@ const createMarkerIcon = (color, label) => {
   });
 };
 
-const MapView = ({ onPointsSelected, route, treePoints }) => {
+const MapView = ({ onPointsSelected, onReset, route, treePoints }) => {
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
 
@@ -69,9 +69,10 @@ const MapView = ({ onPointsSelected, route, treePoints }) => {
         [latlng.lng, latlng.lat]
       );
     } else {
-      // Reset
+      // Reset markers and notify parent
       setStart(null);
       setEnd(null);
+      if (onReset) onReset();
     }
   };
 
