@@ -1,0 +1,40 @@
+# --- Python & Backend ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# --- Node & Frontend ---
+node_modules/
+frontend/node_modules/
+frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+
+# --- Secretos y Entorno ---
+.env
+.env.*
+!.env.example
+
+# --- Datos Pesados y Cache ---
+backend/data/
+cache/
+web/
+*.log
+server.log
+
+# --- Privacidad y Documentación ---
+doc/
+GEMINI.md
+
+# --- Editor y Sistema ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
