@@ -1,4 +1,5 @@
 import os
+import pickle
 from typing import List
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -27,31 +28,47 @@ G = None
 nodes_list = []
 kdtree = None
 
-# Load the Blended graph on startup
-GRAPH_PATH = "backend/data/blended_network.graphml"
-if os.path.exists(GRAPH_PATH):
-    print(f"Loading blended graph from {GRAPH_PATH}...")
-    # Load using nx.read_graphml for standard networkx format
-    G = nx.read_graphml(GRAPH_PATH)
-    print(f"Graph loaded: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges.")
+# Get the directory of the current script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+GRAPH_PATH_PKL = os.path.join(BASE_DIR, "data", "blended_network.pkl")
+GRAPH_PATH_XML = os.path.join(BASE_DIR, "data", "blended_network.graphml")
+
+def load_graph():
+    global G, nodes_list, kdtree
     
-    # Pre-process graph nodes: ensure x and y are floats
-    # and build a KDTree for fast nearest-neighbor search
-    print("Pre-processing nodes and building KDTree...")
-    node_coords = []
-    for n, d in G.nodes(data=True):
-        if 'x' in d and 'y' in d:
-            x, y = float(d['x']), float(d['y'])
-            G.nodes[n]['x'] = x
-            G.nodes[n]['y'] = y
-            node_coords.append([x, y])
-            nodes_list.append(n)
-    
-    if node_coords:
-        kdtree = KDTree(node_coords)
-        print("KDTree built successfully.")
-else:
-    print(f"Warning: {GRAPH_PATH} not found. Routing will fail.")
+    if os.path.exists(GRAPH_PATH_PKL):
+        print(f"Loading optimized binary graph from {GRAPH_PATH_PKL}...")
+        with open(GRAPH_PATH_PKL, 'rb') as f:
+            data = pickle.load(f)
+            G = data['G']
+            kdtree = data['kdtree']
+            nodes_list = data['nodes_list']
+        print(f"Graph loaded successfully from binary: {G.number_of_nodes()} nodes.")
+        return
+
+    if os.path.exists(GRAPH_PATH_XML):
+        print(f"Optimized binary not found. Loading from GraphML {GRAPH_PATH_XML}...")
+        G = nx.read_graphml(GRAPH_PATH_XML)
+        print(f"Graph loaded from XML: {G.number_of_nodes()} nodes.")
+        
+        # Pre-process on the fly
+        node_coords = []
+        for n, d in G.nodes(data=True):
+            if 'x' in d and 'y' in d:
+                x, y = float(d['x']), float(d['y'])
+                G.nodes[n]['x'] = x
+                G.nodes[n]['y'] = y
+                node_coords.append([x, y])
+                nodes_list.append(n)
+        
+        if node_coords:
+            kdtree = KDTree(node_coords)
+            print("KDTree built successfully.")
+    else:
+        print(f"Warning: Neither {GRAPH_PATH_PKL} nor {GRAPH_PATH_XML} found. Routing will fail.")
+
+# Load data on start
+load_graph()
 
 class RouteRequest(BaseModel):
     start: List[float]  # [lon, lat]

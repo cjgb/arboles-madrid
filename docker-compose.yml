@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8010:8000"
     volumes:
       - ./backend/data:/app/backend/data
     restart: always
@@ -14,9 +14,9 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
       args:
-        - VITE_API_BASE_URL=http://localhost:8000
+        - VITE_API_BASE_URL=http://madrid-de-arbol-en-arbol.datanalytics.com
     ports:
-      - "80:80"
+      - "127.0.0.1:8011:80"
     depends_on:
       - backend
     restart: always
