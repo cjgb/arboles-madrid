@@ -8,7 +8,8 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 
 # Install dependencies into a virtual environment
-RUN uv sync --frozen --no-dev
+# Only install main project dependencies, excluding dependency groups
+RUN uv sync --frozen --no-group preprocessing
 
 # Use a clean, smaller final image
 FROM python:3.13-slim-bookworm
