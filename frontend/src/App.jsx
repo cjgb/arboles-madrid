@@ -4,7 +4,7 @@ import MapView from './components/MapView';
 import SummaryPanel from './components/SummaryPanel';
 import InfoModal from './components/InfoModal';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 function App() {
   const [route, setRoute] = useState(null);
@@ -12,7 +12,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [summary, setSummary] = useState(null);
-  
+
   // State for Step 8: Bells and Whistles
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
@@ -48,7 +48,7 @@ function App() {
 
       const feature = routeResponse.data.features[0];
       const coords = feature.geometry.coordinates;
-      
+
       // Leaflet expects [lat, lon], ORS provides [lon, lat]
       const leafletCoords = coords.map(coord => [coord[1], coord[0]]);
       setRoute(leafletCoords);
@@ -98,22 +98,22 @@ function App() {
   return (
     <div className="relative w-screen h-screen overflow-hidden font-sans">
       {/* Map View layer */}
-      <MapView 
-        onPointsSelected={handlePointsSelected} 
+      <MapView
+        onPointsSelected={handlePointsSelected}
         onReset={handleReset}
-        route={route} 
+        route={route}
         treePoints={treePoints}
       />
 
       {/* Summary Panel overlay */}
-      <SummaryPanel 
-        loading={loading} 
-        error={error} 
-        summary={summary} 
+      <SummaryPanel
+        loading={loading}
+        error={error}
+        summary={summary}
       />
 
       {/* Info Button - Step 8 */}
-      <button 
+      <button
         onClick={() => { setIsFirstVisit(false); setIsInfoModalOpen(true); }}
         className="absolute top-4 right-4 z-[1000] p-3 bg-white hover:bg-gray-50 text-emerald-700 rounded-full shadow-xl transition-all hover:scale-110 active:scale-95 flex items-center justify-center border border-emerald-50"
         title="Más información e instrucciones"
@@ -124,9 +124,9 @@ function App() {
       </button>
 
       {/* Welcome Screen / Info Modal - Step 8 */}
-      <InfoModal 
-        isOpen={isInfoModalOpen} 
-        onClose={() => setIsInfoModalOpen(false)} 
+      <InfoModal
+        isOpen={isInfoModalOpen}
+        onClose={() => setIsInfoModalOpen(false)}
         isWelcome={isFirstVisit}
       />
     </div>
