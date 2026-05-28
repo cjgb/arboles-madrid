@@ -2,8 +2,8 @@ import pandas as pd
 import os
 
 def main():
-    input_file = "backend/data/arboles-madrid.xlsx"
-    output_file = "backend/data/arboles-madrid.csv"
+    input_file = "preprocessing/data/arboles-madrid.xlsx"
+    output_file = "preprocessing/data/arboles-madrid.csv"
 
     if not os.path.exists(input_file):
         print(f"Error: {input_file} not found.")

@@ -4,8 +4,6 @@ import MapView from './components/MapView';
 import SummaryPanel from './components/SummaryPanel';
 import InfoModal from './components/InfoModal';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-
 function App() {
   const [route, setRoute] = useState(null);
   const [treePoints, setTreePoints] = useState(null);
@@ -40,7 +38,7 @@ function App() {
 
     try {
       // 1. Fetch the route from the backend
-      const routeResponse = await axios.post(`${API_BASE_URL}/route`, {
+      const routeResponse = await axios.post('/route', {
         start,
         end,
         profile: 'driving-car'
@@ -64,8 +62,7 @@ function App() {
       const duration_min = duration / 60;
 
       // 3. Get the human-friendly summary
-      const summaryResponse = await axios.post(`${API_BASE_URL}/summary`, {
-        distance_km,
+      const summaryResponse = await axios.post('/summary', {        distance_km,
         duration_min,
         start_name: "Punto seleccionado A",
         end_name: "Punto seleccionado B"

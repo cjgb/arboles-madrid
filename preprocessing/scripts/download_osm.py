@@ -3,7 +3,7 @@ import os
 
 def main():
     place_name = "Madrid, Spain"
-    output_file = "backend/data/madrid_network.graphml"
+    output_file = "preprocessing/data/madrid_network.graphml"
     
     if os.path.exists(output_file):
         print(f"File {output_file} already exists. Skipping download.")

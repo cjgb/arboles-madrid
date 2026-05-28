@@ -4,8 +4,8 @@ from pyproj import Transformer
 import os
 
 def main():
-    tree_file = "backend/data/arboles-madrid.csv"
-    network_file = "backend/data/tree_network.csv"
+    tree_file = "preprocessing/data/arboles-madrid.csv"
+    network_file = "preprocessing/data/tree_network.csv"
     output_file = "web/network_map.html"
 
     if not os.path.exists(tree_file) or not os.path.exists(network_file):

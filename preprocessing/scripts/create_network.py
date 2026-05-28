@@ -4,8 +4,8 @@ from scipy.spatial import KDTree
 import os
 
 def main():
-    input_file = "backend/data/arboles-madrid.csv"
-    output_file = "backend/data/tree_network.csv"
+    input_file = "preprocessing/data/arboles-madrid.csv"
+    output_file = "preprocessing/data/tree_network.csv"
 
     if not os.path.exists(input_file):
         print(f"Error: {input_file} not found.")

@@ -7,10 +7,10 @@ import os
 from tqdm import tqdm
 
 def main():
-    osm_file = "backend/data/madrid_network.graphml"
-    tree_file = "backend/data/arboles-madrid.csv"
-    network_file = "backend/data/tree_network.csv"
-    output_file = "backend/data/blended_network.graphml"
+    osm_file = "preprocessing/data/madrid_network.graphml"
+    tree_file = "preprocessing/data/arboles-madrid.csv"
+    network_file = "preprocessing/data/tree_network.csv"
+    output_file = "preprocessing/data/blended_network.graphml"
 
     if not all(os.path.exists(f) for f in [osm_file, tree_file, network_file]):
         print("Error: Missing required files.")

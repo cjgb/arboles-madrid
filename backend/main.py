@@ -5,24 +5,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import math
 import networkx as nx
 from scipy.spatial import KDTree
-import numpy as np
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = FastAPI()
-
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # Global variables for the graph and KDTree
 G = None
@@ -32,7 +18,6 @@ kdtree = None
 # Get the directory of the current script
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 GRAPH_PATH_PKL = os.path.join(BASE_DIR, "data", "blended_network.pkl")
-GRAPH_PATH_XML = os.path.join(BASE_DIR, "data", "blended_network.graphml")
 
 def load_graph():
     global G, nodes_list, kdtree
@@ -45,28 +30,9 @@ def load_graph():
             kdtree = data['kdtree']
             nodes_list = data['nodes_list']
         print(f"Graph loaded successfully from binary: {G.number_of_nodes()} nodes.")
-        return
-
-    if os.path.exists(GRAPH_PATH_XML):
-        print(f"Optimized binary not found. Loading from GraphML {GRAPH_PATH_XML}...")
-        G = nx.read_graphml(GRAPH_PATH_XML)
-        print(f"Graph loaded from XML: {G.number_of_nodes()} nodes.")
-
-        # Pre-process on the fly
-        node_coords = []
-        for n, d in G.nodes(data=True):
-            if 'x' in d and 'y' in d:
-                x, y = float(d['x']), float(d['y'])
-                G.nodes[n]['x'] = x
-                G.nodes[n]['y'] = y
-                node_coords.append([x, y])
-                nodes_list.append(n)
-
-        if node_coords:
-            kdtree = KDTree(node_coords)
-            print("KDTree built successfully.")
     else:
-        print(f"Warning: Neither {GRAPH_PATH_PKL} nor {GRAPH_PATH_XML} found. Routing will fail.")
+        print(f"CRITICAL: {GRAPH_PATH_PKL} not found. Use preprocessing/process_data.py to generate it.")
+        G = None
 
 # Load data on start
 load_graph()

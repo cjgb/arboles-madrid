@@ -5,7 +5,7 @@ from pyproj import Transformer
 import os
 
 def main():
-    file_path = "backend/data/arboles-madrid.xlsx"
+    file_path = "preprocessing/data/arboles-madrid.xlsx"
     if not os.path.exists(file_path):
         print(f"Error: {file_path} not found.")
         return
